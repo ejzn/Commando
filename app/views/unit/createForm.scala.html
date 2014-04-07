@@ -1,4 +1,4 @@
-@(unitForm: Form[Unit], companies: Seq[(String, String)])
+@(unitForm: Form[Unit])
 
 @import helper._
 
@@ -13,16 +13,6 @@
         <fieldset>
 
             @inputText(unitForm("name"), '_label -> "Unit name")
-            @inputText(unitForm("introduced"), '_label -> "Introduced date")
-            @inputText(unitForm("discontinued"), '_label -> "Discontinued date")
-
-            @select(
-                unitForm("company"),
-                companies,
-                '_label -> "Company", '_default -> "-- Choose a company --",
-                '_showConstraints -> false
-            )
-
 
         </fieldset>
 

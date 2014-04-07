@@ -1,10 +1,10 @@
-@(currentPage: Page[(Unit, Option[Company])], currentOrderBy: Int, currentFilter: String)(implicit flash: play.api.mvc.Flash)
+@(currentPage: Page[(Company)], currentOrderBy: Int, currentFilter: String)(implicit flash: play.api.mvc.Flash)
 
 @****************************************
 * Helper generating navigation links    *
 ****************************************@
 @link(newPage: Int, newOrderBy: Option[Int] = None) = @{
-    routes.Units.list(newPage, newOrderBy.map { orderBy =>
+    routes.Companies.list(newPage, newOrderBy.map { orderBy =>
         if(orderBy == scala.math.abs(currentOrderBy)) -currentOrderBy else orderBy
     }.getOrElse(currentOrderBy), currentFilter)
 
@@ -21,7 +21,7 @@
 
 @main {
 
-    <h1>@Messages("units.list.title", currentPage.total)</h1>
+    <h1>@Messages("companies.list.title", currentPage.total)</h1>
 
     @flash.get("success").map { message =>
         <div class="alert-message warning">
@@ -31,41 +31,29 @@
 
     <div id="actions">
 
-        @helper.form(action=routes.Units.list()) {
-            <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by unit name...">
+        @helper.form(action=routes.Companies.list()) {
+            <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by company name...">
             <input type="submit" id="searchsubmit" value="Filter by name" class="btn primary">
         }
 
-        <a class="btn success" id="add" href="@routes.Units.create()">Add a new unit</a>
+        <a class="btn success" id="add" href="@routes.Companies.create()">Add a new company</a>
 
     </div>
 
-    @Option(currentPage.items).filterNot(_.isEmpty).map { units =>
+    @Option(currentPage.items).filterNot(_.isEmpty).map { companies =>
 
-        <table class="units zebra-striped">
+        <table class="companies zebra-striped">
             <thead>
                 <tr>
                     @header(2, "Unit name")
-                    @header(3, "Introduced")
-                    @header(4, "Discontinued")
-                    @header(5, "Company")
                 </tr>
             </thead>
             <tbody>
 
-                @units.map {
-                    case (unit, company) => {
+                @companies.map {
+                    case (company) => {
                         <tr>
-                            <td><a href="@routes.Units.edit(unit.id.get)">@unit.name</a></td>
-                            <td>
-                                @unit.introduced.map(_.format("dd MMM yyyy")).getOrElse { <em>-</em> }
-                            </td>
-                            <td>
-                                @unit.discontinued.map(_.format("dd MMM yyyy")).getOrElse { <em>-</em> }
-                            </td>
-                            <td>
-                                @company.map(_.name).getOrElse { <em>-</em> }
-                            </td>
+                            <td><a href="@routes.Companies.edit(company.id.get)">@company.name</a></td>
                         </tr>
                     }
                 }
@@ -85,7 +73,7 @@
                     </li>
                 }
                 <li class="current">
-                    <a>Displaying @(currentPage.offset + 1) to @(currentPage.offset + units.size) of @currentPage.total</a>
+                    <a>Displaying @(currentPage.offset + 1) to @(currentPage.offset + currentPage.items.size) of @currentPage.total</a>
                 </li>
                 @currentPage.next.map { page =>
                     <li class="next">

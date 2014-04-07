@@ -5,19 +5,40 @@
 # Default path will just redirect to the unit list
 GET     /                           controllers.Application.index
 
-# Units list (look at the default values for pagination parameters)
-GET     /units                  controllers.Units.list(p:Int ?= 0, s:Int ?= 2, f ?= "")
 
-# Add unit
-GET     /units/new              controllers.Units.create
-POST    /units                  controllers.Units.save
+####################
+# Unit Routes
+####################
+GET     /unit                  controllers.Units.index
+GET     /unit/list             controllers.Units.list(page:Int ?= 0, s:Int ?= 2, f ?= "")
+GET     /unit/new              controllers.Units.create
+POST    /unit                  controllers.Units.save
+GET     /unit/:id              controllers.Units.edit(id:Long)
+POST    /unit/:id              controllers.Units.update(id:Long)
+POST    /unit/:id/delete       controllers.Units.delete(id:Long)
 
-# Edit existing unit
-GET     /units/:id              controllers.Units.edit(id:Long)
-POST    /units/:id              controllers.Units.update(id:Long)
+####################
+# Copmany Routes
+####################
+GET     /company                  controllers.Companies.index
+GET     /company/list             controllers.Companies.list(page:Int ?= 0, s:Int ?= 2, f ?= "")
+GET     /company/new              controllers.Companies.create
+POST    /company                  controllers.Companies.save
+GET     /company/:id              controllers.Companies.edit(id:Long)
+POST    /company/:id              controllers.Companies.update(id:Long)
+POST    /company/:id/delete       controllers.Companies.delete(id:Long)
 
-# Delete a unit
-POST    /units/:id/delete       controllers.Units.delete(id:Long)
+
+####################
+# Location Routes
+####################
+GET     /location                  controllers.Locations.index
+GET     /location/list             controllers.Locations.list(page:Int ?=0, s:Int ?= 2, f ?= "")
+GET     /location/new              controllers.Locations.create
+POST    /location                  controllers.Locations.save
+GET     /location/:id              controllers.Locations.edit(id:Long)
+POST    /location/:id              controllers.Locations.update(id:Long)
+POST    /location/:id/delete       controllers.Locations.delete(id:Long)
 
 
 # Map static resources from the /public folder to the /assets URL path

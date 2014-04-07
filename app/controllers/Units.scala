@@ -11,7 +11,7 @@ import views._
 import models._
 
 /**
- * Manage the units
+ * Manage the unit
  */
 object Units extends Controller {
 
@@ -36,19 +36,19 @@ object Units extends Controller {
   // -- Actions
 
   /**
-   * Handle default path requests, redirect to units list
+   * Handle default path requests, redirect to unit list
    */
   def index = Action { Home }
 
   /**
-   * Display the paginated list of units.
+   * Display the paginated list of unit.
    *
    * @param page Current page number (starts from 0)
    * @param orderBy Column to be sorted
    * @param filter Filter applied on unit names
    */
   def list(page: Int, orderBy: Int, filter: String) = Action { implicit request =>
-    Ok(html.list(
+    Ok(html.unit.list(
       Unit.list(page = page, orderBy = orderBy, filter = ("%"+filter+"%")),
       orderBy, filter
     ))
@@ -61,7 +61,7 @@ object Units extends Controller {
    */
   def edit(id: Long) = Action {
     Unit.findById(id).map { unit =>
-      Ok(html.editForm(id, unitForm.fill(unit), Company.options))
+      Ok(html.unit.editForm(id, unitForm.fill(unit)))
     }.getOrElse(NotFound)
   }
 
@@ -72,7 +72,7 @@ object Units extends Controller {
    */
   def update(id: Long) = Action { implicit request =>
     unitForm.bindFromRequest.fold(
-      formWithErrors => BadRequest(html.editForm(id, formWithErrors, Company.options)),
+      formWithErrors => BadRequest(html.unit.editForm(id, formWithErrors)),
       unit => {
         Unit.update(id, unit)
         Home.flashing("success" -> "Unit %s has been updated".format(unit.name))
@@ -84,7 +84,7 @@ object Units extends Controller {
    * Display the 'new unit form'.
    */
   def create = Action {
-    Ok(html.createForm(unitForm, Company.options))
+    Ok(html.unit.createForm(unitForm))
   }
 
   /**
@@ -92,7 +92,7 @@ object Units extends Controller {
    */
   def save = Action { implicit request =>
     unitForm.bindFromRequest.fold(
-      formWithErrors => BadRequest(html.createForm(formWithErrors, Company.options)),
+      formWithErrors => BadRequest(html.unit.createForm(formWithErrors)),
       unit => {
         Unit.insert(unit)
         Home.flashing("success" -> "Unit %s has been created".format(unit.name))

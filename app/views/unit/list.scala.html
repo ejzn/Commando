@@ -1,4 +1,4 @@
-@(currentPage: Page[(Unit, Option[Company])], currentOrderBy: Int, currentFilter: String)(implicit flash: play.api.mvc.Flash)
+@(currentPage: Page[(Unit)], currentOrderBy: Int, currentFilter: String)(implicit flash: play.api.mvc.Flash)
 
 @****************************************
 * Helper generating navigation links    *
@@ -21,7 +21,7 @@
 
 @main {
 
-    <h1>@Messages("units.list.title", currentPage.total)</h1>
+    <h1>@Messages("unit.list.title", currentPage.total)</h1>
 
     @flash.get("success").map { message =>
         <div class="alert-message warning">
@@ -40,32 +40,20 @@
 
     </div>
 
-    @Option(currentPage.items).filterNot(_.isEmpty).map { units =>
+    @Option(currentPage.items).filterNot(_.isEmpty).map { unit =>
 
-        <table class="units zebra-striped">
+        <table class="unit zebra-striped">
             <thead>
                 <tr>
                     @header(2, "Unit name")
-                    @header(3, "Introduced")
-                    @header(4, "Discontinued")
-                    @header(5, "Company")
                 </tr>
             </thead>
             <tbody>
 
-                @units.map {
-                    case (unit, company) => {
+                @unit.map {
+                    case (unit) => {
                         <tr>
                             <td><a href="@routes.Units.edit(unit.id.get)">@unit.name</a></td>
-                            <td>
-                                @unit.introduced.map(_.format("dd MMM yyyy")).getOrElse { <em>-</em> }
-                            </td>
-                            <td>
-                                @unit.discontinued.map(_.format("dd MMM yyyy")).getOrElse { <em>-</em> }
-                            </td>
-                            <td>
-                                @company.map(_.name).getOrElse { <em>-</em> }
-                            </td>
                         </tr>
                     }
                 }
@@ -73,7 +61,7 @@
             </tbody>
         </table>
 
-        <div id="pagination" class="pagination">
+   <div id="pagination" class="pagination">
             <ul>
                 @currentPage.prev.map { page =>
                     <li class="prev">
@@ -85,7 +73,7 @@
                     </li>
                 }
                 <li class="current">
-                    <a>Displaying @(currentPage.offset + 1) to @(currentPage.offset + units.size) of @currentPage.total</a>
+                    <a>Displaying @(currentPage.offset + 1) to @(currentPage.offset + currentPage.items.size) of @currentPage.total</a>
                 </li>
                 @currentPage.next.map { page =>
                     <li class="next">

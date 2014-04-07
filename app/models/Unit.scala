@@ -10,16 +10,7 @@ import anorm.SqlParser._
 
 import scala.language.postfixOps
 
-case class Company(id: Pk[Long] = NotAssigned, name: String)
 case class Unit(id: Pk[Long] = NotAssigned, name: String, introduced: Option[Date], discontinued: Option[Date], companyId: Option[Long])
-
-/**
- * Helper for pagination.
- */
-case class Page[A](items: Seq[A], page: Int, offset: Long, total: Long) {
-  lazy val prev = Option(page - 1).filter(_ >= 0)
-  lazy val next = Option(page + 1).filter(_ => (offset + items.size) < total)
-}
 
 object Unit {
 
@@ -64,7 +55,7 @@ object Unit {
    * @param orderBy Unit property used for sorting
    * @param filter Filter applied on the name column
    */
-  def list(page: Int = 0, pageSize: Int = 10, orderBy: Int = 1, filter: String = "%"): Page[(Unit, Option[Company])] = {
+  def list(page: Int = 0, pageSize: Int = 10, orderBy: Int = 1, filter: String = "%"): Page[(Unit)] = {
 
     val offest = pageSize * page
 
@@ -83,7 +74,7 @@ object Unit {
         'offset -> offest,
         'filter -> filter,
         'orderBy -> orderBy
-      ).as(Unit.withCompany *)
+      ).as(Unit.simple *)
 
       val totalRows = SQL(
         """
@@ -157,27 +148,6 @@ object Unit {
     DB.withConnection { implicit connection =>
       SQL("delete from unit where id = {id}").on('id -> id).executeUpdate()
     }
-  }
-
-}
-
-object Company {
-
-  /**
-   * Parse a Company from a ResultSet
-   */
-  val simple = {
-    get[Pk[Long]]("company.id") ~
-    get[String]("company.name") map {
-      case id~name => Company(id, name)
-    }
-  }
-
-  /**
-   * Construct the Map[String,String] needed to fill a select options set.
-   */
-  def options: Seq[(String,String)] = DB.withConnection { implicit connection =>
-    SQL("select * from company order by name").as(Company.simple *).map(c => c.id.toString -> c.name)
   }
 
 }

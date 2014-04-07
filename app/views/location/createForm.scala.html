@@ -1,4 +1,4 @@
-@(unitForm: Form[Unit], companies: Seq[(String, String)])
+@(locationForm: Form[Location])
 
 @import helper._
 
@@ -6,29 +6,17 @@
 
 @main {
 
-    <h1>Add a unit</h1>
+    <h1>Add a location</h1>
 
-    @form(routes.Units.save()) {
+    @form(routes.Locations.save()) {
 
         <fieldset>
-
-            @inputText(unitForm("name"), '_label -> "Unit name")
-            @inputText(unitForm("introduced"), '_label -> "Introduced date")
-            @inputText(unitForm("discontinued"), '_label -> "Discontinued date")
-
-            @select(
-                unitForm("company"),
-                companies,
-                '_label -> "Company", '_default -> "-- Choose a company --",
-                '_showConstraints -> false
-            )
-
-
+            @inputText(locationForm("name"), '_label -> "Location name")
         </fieldset>
 
         <div class="actions">
-            <input type="submit" value="Create this unit" class="btn primary"> or
-            <a href="@routes.Units.list()" class="btn">Cancel</a>
+            <input type="submit" value="Create this location" class="btn primary"> or
+            <a href="@routes.Locations.list()" class="btn">Cancel</a>
         </div>
 
     }
