@@ -1,0 +1,39 @@
+@(id: Long, unitForm: Form[Unit], companies : Seq[(String, String)])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.f) }
+
+@main {
+
+    <h1>Edit unit</h1>
+
+    @form(routes.Units.update(id)) {
+
+        <fieldset>
+
+            @inputText(unitForm("name"), '_label -> "Unit name")
+            @inputText(unitForm("introduced"), '_label -> "Introduced date")
+            @inputText(unitForm("discontinued"), '_label -> "Discontinued date")
+
+            @select(
+                unitForm("company"),
+                companies,
+                '_label -> "Company", '_default -> "-- Choose a company --",
+                '_showConstraints -> false
+            )
+
+        </fieldset>
+
+        <div class="actions">
+            <input type="submit" value="Save this unit" class="btn primary"> or
+            <a href="@routes.Units.list()" class="btn">Cancel</a>
+        </div>
+
+    }
+
+    @form(routes.Units.delete(id), 'class -> "topRight") {
+        <input type="submit" value="Delete this unit" class="btn danger">
+    }
+
+}

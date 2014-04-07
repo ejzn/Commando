@@ -2,8 +2,24 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
+# Default path will just redirect to the unit list
 GET     /                           controllers.Application.index
+
+# Units list (look at the default values for pagination parameters)
+GET     /units                  controllers.Units.list(p:Int ?= 0, s:Int ?= 2, f ?= "")
+
+# Add unit
+GET     /units/new              controllers.Units.create
+POST    /units                  controllers.Units.save
+
+# Edit existing unit
+GET     /units/:id              controllers.Units.edit(id:Long)
+POST    /units/:id              controllers.Units.update(id:Long)
+
+# Delete a unit
+POST    /units/:id/delete       controllers.Units.delete(id:Long)
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
