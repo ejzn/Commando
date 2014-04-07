@@ -61,5 +61,11 @@ table.units .header a {
 #pagination ul .current a {
     color: #666;
 }
-
-
+nav.navbar-default {
+    border-top: 5px solid #444;
+}
+/* Custom Header */
+nav.navbar-default ul li a.active {
+    border-color: #e46a3f;
+    background: #2d2c2c;
+}
