@@ -5,8 +5,8 @@ import play.api.mvc._
 
 object Application extends Controller {
 
-  def index = Action {
-      Ok(views.html.dashboard());
-  }
+    def index = Action {
+        Ok(views.html.dashboard());
+    }
 
 }

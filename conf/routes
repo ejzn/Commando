@@ -44,13 +44,13 @@ POST    /company/:id/delete       controllers.Companies.delete(id:Long)
 ####################
 # Location Routes
 ####################
-GET     /location                  controllers.Locations.index
-GET     /location/list             controllers.Locations.list(page:Int ?=0, s:Int ?= 2, f ?= "")
-GET     /location/new              controllers.Locations.create
-POST    /location                  controllers.Locations.save
-GET     /location/:id              controllers.Locations.edit(id:Long)
-POST    /location/:id              controllers.Locations.update(id:Long)
-POST    /location/:id/delete       controllers.Locations.delete(id:Long)
+GET     /locations                  controllers.Locations.index
+GET     /locations/list             controllers.Locations.list(page:Int ?=0, s:Int ?= 2, f ?= "")
+GET     /locations/new              controllers.Locations.create
+POST    /locations                  controllers.Locations.save
+GET     /locations/:id              controllers.Locations.edit(id:Long)
+POST    /locations/:id              controllers.Locations.update(id:Long)
+POST    /locations/:id/delete       controllers.Locations.delete(id:Long)
 
 
 # Map static resources from the /public folder to the /assets URL path

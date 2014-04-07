@@ -64,8 +64,13 @@ table.units .header a {
 nav.navbar-default {
     border-top: 5px solid #444;
 }
+nav.navbar-default ul li a {
+    border-top: 5px solid #444;
+    margin-top: -5px;
+}
 /* Custom Header */
 nav.navbar-default ul li a.active {
+    border-top: 5px solid #444;
     border-color: #e46a3f;
     background: #2d2c2c;
 }
