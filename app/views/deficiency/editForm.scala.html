@@ -1,0 +1,28 @@
+@(id: Long, deficiencyForm: Form[Deficiency])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.f) }
+
+@main {
+
+    <h1>Edit deficiency</h1>
+
+    @form(routes.Deficiencies.update(id)) {
+
+        <fieldset>
+            @inputText(deficiencyForm("title"), '_label -> "Deficiency title")
+        </fieldset>
+
+        <div class="actions">
+            <input type="submit" value="Save this deficiency" class="btn primary"> or
+            <a href="@routes.Deficiencies.list()" class="btn">Cancel</a>
+        </div>
+
+    }
+
+    @form(routes.Deficiencies.delete(id), 'class -> "topRight") {
+        <input type="submit" value="Delete this deficiency" class="btn danger">
+    }
+
+}

@@ -21,7 +21,7 @@
 
 @main {
 
-    <h1>@Messages("companies.list.title", currentPage.total)</h1>
+    <h2>@Messages("companies.list.title", currentPage.total)</h2>
 
     @flash.get("success").map { message =>
         <div class="alert-message warning">

@@ -57,9 +57,8 @@ object Location {
       val locations = SQL(
         """
           select * from location
-          left join location on location.location_id = location.id
           where location.name like {filter}
-          order by {orderBy} nulls last
+          order by {orderBy}
           limit {pageSize} offset {offset}
         """
       ).on(
@@ -72,7 +71,6 @@ object Location {
       val totalRows = SQL(
         """
           select count(*) from location
-          left join location on location.location_id = location.id
           where location.name like {filter}
         """
       ).on(

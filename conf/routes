@@ -9,16 +9,28 @@ GET     /                           controllers.Application.index
 ####################
 # Unit Routes
 ####################
-GET     /unit                  controllers.Units.index
-GET     /unit/list             controllers.Units.list(page:Int ?= 0, s:Int ?= 2, f ?= "")
-GET     /unit/new              controllers.Units.create
-POST    /unit                  controllers.Units.save
-GET     /unit/:id              controllers.Units.edit(id:Long)
-POST    /unit/:id              controllers.Units.update(id:Long)
-POST    /unit/:id/delete       controllers.Units.delete(id:Long)
+GET     /units                  controllers.Units.index
+GET     /units/list             controllers.Units.list(page:Int ?= 0, s:Int ?= 2, f ?= "")
+GET     /units/new              controllers.Units.create
+POST    /units                  controllers.Units.save
+GET     /units/:id              controllers.Units.edit(id:Long)
+POST    /units/:id              controllers.Units.update(id:Long)
+POST    /units/:id/delete       controllers.Units.delete(id:Long)
 
 ####################
-# Copmany Routes
+# Company Routes
+####################
+GET     /deficiencies                  controllers.Deficiencies.index
+GET     /deficiencies/list             controllers.Deficiencies.list(page:Int ?= 0, s:Int ?= 2, f ?= "")
+GET     /deficiencies/new              controllers.Deficiencies.create
+POST    /deficiencies                  controllers.Deficiencies.save
+GET     /deficiencies/:id              controllers.Deficiencies.edit(id:Long)
+POST    /deficiencies/:id              controllers.Deficiencies.update(id:Long)
+POST    /deficiencies/:id/delete       controllers.Deficiencies.delete(id:Long)
+
+
+####################
+# Company Routes
 ####################
 GET     /company                  controllers.Companies.index
 GET     /company/list             controllers.Companies.list(page:Int ?= 0, s:Int ?= 2, f ?= "")

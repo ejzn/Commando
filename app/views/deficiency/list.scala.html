@@ -1,10 +1,10 @@
-@(currentPage: Page[(Location)], currentOrderBy: Int, currentFilter: String)(implicit flash: play.api.mvc.Flash)
+@(currentPage: Page[(Deficiency)], currentOrderBy: Int, currentFilter: String)(implicit flash: play.api.mvc.Flash)
 
 @****************************************
 * Helper generating navigation links    *
 ****************************************@
 @link(newPage: Int, newOrderBy: Option[Int] = None) = @{
-    routes.Locations.list(newPage, newOrderBy.map { orderBy =>
+    routes.Deficiencies.list(newPage, newOrderBy.map { orderBy =>
         if(orderBy == scala.math.abs(currentOrderBy)) -currentOrderBy else orderBy
     }.getOrElse(currentOrderBy), currentFilter)
 
@@ -21,7 +21,7 @@
 
 @main {
 
-    <h2>@Messages("locations.list.title", currentPage.total)</h2>
+    <h2>@Messages("deficiencies.list.title", currentPage.total)</h2>
 
     @flash.get("success").map { message =>
         <div class="alert-message warning">
@@ -31,29 +31,29 @@
 
     <div id="actions">
 
-        @helper.form(action=routes.Locations.list()) {
-            <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by location name...">
+        @helper.form(action=routes.Deficiencies.list()) {
+            <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by deficiency name...">
             <input type="submit" id="searchsubmit" value="Filter by name" class="btn primary">
         }
 
-        <a class="btn success" id="add" href="@routes.Locations.create()">Add a new location</a>
+        <a class="btn success" id="add" href="@routes.Deficiencies.create()">Add a new deficiency</a>
 
     </div>
 
-    @Option(currentPage.items).filterNot(_.isEmpty).map { locations =>
+    @Option(currentPage.items).filterNot(_.isEmpty).map { deficiency =>
 
-        <table class="locations zebra-striped">
+        <table class="deficiency zebra-striped">
             <thead>
                 <tr>
-                    @header(2, "Unit name")
+                    @header(2, "Deficiency title")
                 </tr>
             </thead>
             <tbody>
 
-                @locations.map {
-                    case (location) => {
+                @deficiency.map {
+                    case (deficiency) => {
                         <tr>
-                            <td><a href="@routes.Locations.edit(location.id.get)">@location.name</a></td>
+                            <td><a href="@routes.Deficiencies.edit(deficiency.id.get)">@deficiency.title</a></td>
                         </tr>
                     }
                 }
@@ -61,7 +61,7 @@
             </tbody>
         </table>
 
-        <div id="pagination" class="pagination">
+   <div id="pagination" class="pagination">
             <ul>
                 @currentPage.prev.map { page =>
                     <li class="prev">

@@ -64,9 +64,8 @@ object Unit {
       val units = SQL(
         """
           select * from unit
-          left join company on unit.company_id = company.id
           where unit.name like {filter}
-          order by {orderBy} nulls last
+          order by {orderBy}
           limit {pageSize} offset {offset}
         """
       ).on(
@@ -79,7 +78,6 @@ object Unit {
       val totalRows = SQL(
         """
           select count(*) from unit
-          left join company on unit.company_id = company.id
           where unit.name like {filter}
         """
       ).on(
