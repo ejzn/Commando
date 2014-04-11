@@ -81,7 +81,7 @@ object Deficiencies extends Controller {
    * Display the 'new deficiency form'.
    */
   def create = Action {
-    Ok(html.deficiency.createForm(deficiencyForm))
+    Ok(html.deficiency.createForm(deficiencyForm, Unit.options(1)))
   }
 
   /**
@@ -89,7 +89,7 @@ object Deficiencies extends Controller {
    */
   def save = Action { implicit request =>
     deficiencyForm.bindFromRequest.fold(
-      formWithErrors => BadRequest(html.deficiency.createForm(formWithErrors)),
+      formWithErrors => BadRequest(html.deficiency.createForm(formWithErrors, Unit.options(1))),
       deficiency => {
         Deficiency.insert(deficiency)
         Home.flashing("success" -> "Deficiency %s has been created".format(deficiency.title))

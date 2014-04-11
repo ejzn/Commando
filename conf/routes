@@ -18,7 +18,7 @@ POST    /units/:id              controllers.Units.update(id:Long)
 POST    /units/:id/delete       controllers.Units.delete(id:Long)
 
 ####################
-# Company Routes
+# Deficiencies Routes
 ####################
 GET     /deficiencies                  controllers.Deficiencies.index
 GET     /deficiencies/list             controllers.Deficiencies.list(page:Int ?= 0, s:Int ?= 2, f ?= "")
@@ -39,6 +39,17 @@ POST    /company                  controllers.Companies.save
 GET     /company/:id              controllers.Companies.edit(id:Long)
 POST    /company/:id              controllers.Companies.update(id:Long)
 POST    /company/:id/delete       controllers.Companies.delete(id:Long)
+
+####################
+# Building Routes
+####################
+GET     /buildings                  controllers.Buildings.index
+GET     /buildings/list             controllers.Buildings.list(page:Int ?=0, s:Int ?= 2, f ?= "")
+GET     /buildings/new              controllers.Buildings.create
+POST    /buildings                  controllers.Buildings.save
+GET     /buildings/:id              controllers.Buildings.edit(id:Long)
+POST    /buildings/:id              controllers.Buildings.update(id:Long)
+POST    /buildings/:id/delete       controllers.Buildings.delete(id:Long)
 
 
 ####################

@@ -22,7 +22,7 @@ CREATE TABLE location (
 
     created datetime NOT NULL,
     updated datetime NOT NULL,
-    deleted datetime NOT NULL,
+    deleted datetime,
 
     PRIMARY KEY (id),
     KEY location_company_id_foreign_id (company_id)
@@ -39,7 +39,7 @@ CREATE TABLE unit (
 
     created datetime NOT NULL,
     updated datetime NOT NULL,
-    deleted datetime NOT NULL,
+    deleted datetime,
 
     PRIMARY KEY (id),
     KEY unit_company_id_foreign_id (company_id),

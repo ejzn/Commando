@@ -1,4 +1,4 @@
-@(unitForm: Form[Unit])
+@(unitForm: Form[Unit], locations: Seq[(String, String)], buildings: Seq[(String, String)])
 
 @import helper._
 
@@ -13,6 +13,21 @@
         <fieldset>
 
             @inputText(unitForm("name"), '_label -> "Unit name")
+            @inputText(unitForm("number"), '_label -> "Number")
+
+            @select(
+                unitForm("location_id"),
+                locations,
+                '_label -> "Location", '_default -> "-- Location --",
+                '_showConstraints -> false
+            )
+
+             @select(
+                unitForm("building_id"),
+                buildings,
+                '_label -> "Building", '_default -> "-- Building --",
+                '_showConstraints -> false
+            )
 
         </fieldset>
 

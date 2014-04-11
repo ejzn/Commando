@@ -10,7 +10,7 @@ import anorm.SqlParser._
 
 import scala.language.postfixOps
 
-case class Unit(id: Pk[Long] = NotAssigned, name: String, introduced: Option[Date], discontinued: Option[Date], companyId: Option[Long])
+case class Unit(id: Pk[Long] = NotAssigned, name: String, number: Int,companyId: Option[Long])
 
 object Unit {
 
@@ -22,10 +22,9 @@ object Unit {
   val simple = {
     get[Pk[Long]]("unit.id") ~
     get[String]("unit.name") ~
-    get[Option[Date]]("unit.introduced") ~
-    get[Option[Date]]("unit.discontinued") ~
+    get[Int]("unit.number") ~
     get[Option[Long]]("unit.company_id") map {
-      case id~name~introduced~discontinued~companyId => Unit(id, name, introduced, discontinued, companyId)
+      case id~name~number~companyId => Unit(id, name, number, companyId)
     }
   }
 
@@ -101,14 +100,12 @@ object Unit {
       SQL(
         """
           update unit
-          set name = {name}, introduced = {introduced}, discontinued = {discontinued}, company_id = {company_id}
+          set name = {name}, company_id = {company_id}
           where id = {id}
         """
       ).on(
         'id -> id,
         'name -> unit.name,
-        'introduced -> unit.introduced,
-        'discontinued -> unit.discontinued,
         'company_id -> unit.companyId
       ).executeUpdate()
     }
@@ -125,13 +122,11 @@ object Unit {
         """
           insert into unit values (
             (select next value for unit_seq),
-            {name}, {introduced}, {discontinued}, {company_id}
+            {name}, {company_id}
           )
         """
       ).on(
         'name -> unit.name,
-        'introduced -> unit.introduced,
-        'discontinued -> unit.discontinued,
         'company_id -> unit.companyId
       ).executeUpdate()
     }
@@ -146,6 +141,13 @@ object Unit {
     DB.withConnection { implicit connection =>
       SQL("delete from unit where id = {id}").on('id -> id).executeUpdate()
     }
+  }
+
+  /**
+   * Construct the Map[String,String] needed to fill a select options set.
+   */
+  def options(company_id: Int): Seq[(String, String)] = DB.withConnection { implicit connection =>
+      SQL("select * from unit  where company_id = {company_id} order by number").on('company_id -> company_id).as(Unit.simple *).map(c => c.id.toString -> c.number.toString)
   }
 
 }

@@ -77,3 +77,8 @@ nav.navbar-default ul li a.active {
 section#main {
     padding-top:1em;
 }
+a.active {
+    border-top: 5px solid #444;
+    border-color: #e46a3f;
+    background: #2d2c2c;
+}

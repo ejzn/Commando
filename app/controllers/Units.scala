@@ -27,8 +27,7 @@ object Units extends Controller {
     mapping(
       "id" -> ignored(NotAssigned:Pk[Long]),
       "name" -> nonEmptyText,
-      "introduced" -> optional(date("yyyy-MM-dd")),
-      "discontinued" -> optional(date("yyyy-MM-dd")),
+      "number" -> number,
       "company" -> optional(longNumber)
     )(Unit.apply)(Unit.unapply)
   )
@@ -84,7 +83,7 @@ object Units extends Controller {
    * Display the 'new unit form'.
    */
   def create = Action {
-    Ok(html.unit.createForm(unitForm))
+    Ok(html.unit.createForm(unitForm, Location.options(1), Building.options(1)))
   }
 
   /**
@@ -92,7 +91,7 @@ object Units extends Controller {
    */
   def save = Action { implicit request =>
     unitForm.bindFromRequest.fold(
-      formWithErrors => BadRequest(html.unit.createForm(formWithErrors)),
+      formWithErrors => BadRequest(html.unit.createForm(formWithErrors, Location.options(1), Building.options(1))),
       unit => {
         Unit.insert(unit)
         Home.flashing("success" -> "Unit %s has been created".format(unit.name))

@@ -21,8 +21,8 @@ object Deficiency {
    */
   val simple = {
     get[Pk[Long]]("deficiency.id") ~
-    get[String]("deficiency.name") map {
-        case id~name => Deficiency(id, name)
+    get[String]("deficiency.title") map {
+        case id~title => Deficiency(id, title)
         }
     }
 
@@ -108,8 +108,7 @@ object Deficiency {
     DB.withConnection { implicit connection =>
       SQL(
         """
-          insert into deficiency values (
-            (select next value for deficiency_seq),
+          insert into deficiency (title) values (
             {title}
           )
         """

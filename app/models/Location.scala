@@ -141,5 +141,13 @@ object Location {
     }
   }
 
+  /**
+   * Construct the Map[String,String] needed to fill a select options set.
+   */
+  def options(company_id: Int): Seq[(String, String)] = DB.withConnection { implicit connection =>
+      SQL("select * from location where company_id = {company_id} order by name").on('company_id -> company_id).as(Unit.simple *).map(c => c.id.toString -> c.number.toString)
+  }
+
+
 }
 

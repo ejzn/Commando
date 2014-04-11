@@ -1,4 +1,4 @@
-@(deficiencyForm: Form[Deficiency])
+@(deficiencyForm: Form[Deficiency], units: Seq[(String, String)])
 
 @import helper._
 
@@ -13,6 +13,14 @@
         <fieldset>
 
             @inputText(deficiencyForm("title"), '_label -> "Deficiency title")
+            @inputText(deficiencyForm("content"), '_label -> "Deficiency content")
+
+            @select(
+                deficiencyForm("unit_id"),
+                units,
+                '_label -> "Unit", '_default -> "-- Choose a Unit --",
+                '_showConstraints -> false
+            )
 
         </fieldset>
 

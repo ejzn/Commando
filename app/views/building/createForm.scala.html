@@ -1,0 +1,24 @@
+@(buildingForm: Form[Building])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.f) }
+
+@main {
+
+    <h1>Add a building</h1>
+
+    @form(routes.Buildings.save()) {
+
+        <fieldset>
+            @inputText(buildingForm("title"), '_label -> "Building Name")
+        </fieldset>
+
+        <div class="actions">
+            <input type="submit" value="Create this building" class="btn primary"> or
+            <a href="@routes.Buildings.list()" class="btn">Cancel</a>
+        </div>
+
+    }
+
+}
